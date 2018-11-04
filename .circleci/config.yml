@@ -1,0 +1,52 @@
+version: 2
+jobs:
+  lint:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "Makefile" }}
+      - run:
+          name: install deps
+          command: make deps-lint
+      - save_cache:
+          key: dependency-cache-{{ checksum "Makefile" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: test
+          command: make lint lint_reporter=junit
+      - run:
+          name: move tests into position
+          command: |
+              mkdir -p test-results/replicated-lint
+              mv test-results/replicated-lint-results.xml test-results/replicated-lint/replicated-lint-results.xml
+      - store_test_results:
+          path:  test-results
+
+  release_unstable:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run:
+          name: install deps
+          command: make deps-vendor-cli
+      - run:
+          name: release
+          command: make  release channel=Unstable
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - lint
+      - release_unstable:
+          requires:
+            - lint
+          filters:
+            branches:
+              only: master
