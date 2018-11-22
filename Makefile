@@ -32,8 +32,8 @@ watch:
 	: │ environment variables, both of which
 	: │ can be obtained at https://vendor.replicated.com
 	: │
-	: │  $REPLICATED_APP -- The ID or url slug of your application
-	: │  $REPLICATED_API_TOKEN -- An API token with write access to releases.
+	: │  $$REPLICATED_APP -- The ID or url slug of your application
+	: │  $$REPLICATED_API_TOKEN -- An API token with write access to releases.
 	: │
 	: │ You can set the channel by passing a
 	: │ "channel" to "make watch", e.g.
