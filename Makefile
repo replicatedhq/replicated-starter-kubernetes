@@ -6,23 +6,28 @@ replicated_lint ?= `npm bin`/replicated-lint
 SHELL := /bin/bash -o pipefail
 
 deps-vendor-cli:
-	mkdir -p deps/
+	@if [[ -x deps/replicated ]]; then exit 0; else \
+	mkdir -p deps/; \
 	if [[ "`uname`" == "Linux" ]]; then curl -fsSL https://github.com/replicatedhq/replicated/releases/download/v0.4.0/cli_0.4.0_linux_amd64.tar.gz | tar xvz -C deps; exit 0; fi; \
-	if [[ "`uname`" == "Darwin" ]]; then curl -fsSL https://github.com/replicatedhq/replicated/releases/download/v0.4.0/cli_0.4.0_darwin_amd64.tar.gz | tar xvz -C deps; exit 0; fi;
+	if [[ "`uname`" == "Darwin" ]]; then curl -fsSL https://github.com/replicatedhq/replicated/releases/download/v0.4.0/cli_0.4.0_darwin_amd64.tar.gz | tar xvz -C deps; exit 0; fi; fi;
 
 deps-lint:
-	npm install --save-dev replicated-lint gazer-color
-deps: deps-lint deps-vendor-cli
+	@[ -x `npm bin`/replicated-lint ] || npm install --no-save replicated-lint
 
-lint:
+deps-watch:
+	@[ -x `npm bin`/gazer-color ] || npm install --no-save gazer-color
+
+deps: deps-lint deps-vendor-cli deps-watch
+
+lint: deps-lint
 	$(replicated_lint) validate --infile replicated.yaml --reporter $(lint_reporter)
 	# check k8s for valid yaml, no schema checks yet
 	$(replicated_lint) validate --infile replicated.yaml --reporter $(lint_reporter) --excludeDefaults --multidocIndex=1
 
-release:
+release: deps-vendor-cli
 	cat replicated.yaml | deps/replicated release create --promote $(channel) --yaml -
 
-watch:
+watch: deps
 	: ┌───────────────────────────────────────────
 	: │ This command will watch replicated.yaml for
 	: │ changes and publish a new release to the
@@ -43,9 +48,9 @@ watch:
 	: └────────────────────────────────────────────
 	`npm bin`/gazer-color --pattern replicated.yaml ${MAKE} lint release
 
-pull-latest-release:
+pull-latest-release: deps-vendor-cli
 	deps/replicated release ls | head -n 2 | tail -n 1 | cut -d' ' -f 1 | xargs deps/replicated release inspect  | sed '1,/---/d'  > replicated.yaml
 
-list-releases:
+list-releases: deps-vendor-cli
 	deps/replicated release ls
 
