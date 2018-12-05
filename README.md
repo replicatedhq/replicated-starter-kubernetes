@@ -57,7 +57,25 @@ make list-releases
 Once you've made changes to `replicated.yaml`, you can push a new release to a channel with
 
 ```
-make release channel=Unstable
+make release
+```
+
+By default the `Unstable` channel will be used. You can override this with `channel`:
+
+```
+make release channel=Beta
+```
+
+If you have nodejs installated, you can lint your YAML before releasing with
+
+```
+make lint
+```
+
+or even
+
+```
+make lint release
 ```
 
 For an integrated approach, you can use `make watch` to watch the `replicated.yaml` file, linting and
