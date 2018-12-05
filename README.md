@@ -49,7 +49,7 @@ export REPLICATED_API_TOKEN=...
 You can ensure this is working with
 
 ```
-make deps list-releases
+make list-releases
 ```
 
 #### Iterating on your release

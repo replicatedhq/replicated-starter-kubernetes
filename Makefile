@@ -7,6 +7,7 @@ SHELL := /bin/bash -o pipefail
 
 deps-vendor-cli:
 	@if [[ -x deps/replicated ]]; then exit 0; else \
+	echo '-> Downloading Replicated CLI... '; \
 	mkdir -p deps/; \
 	if [[ "`uname`" == "Linux" ]]; then curl -fsSL https://github.com/replicatedhq/replicated/releases/download/v0.4.0/cli_0.4.0_linux_amd64.tar.gz | tar xvz -C deps; exit 0; fi; \
 	if [[ "`uname`" == "Darwin" ]]; then curl -fsSL https://github.com/replicatedhq/replicated/releases/download/v0.4.0/cli_0.4.0_darwin_amd64.tar.gz | tar xvz -C deps; exit 0; fi; fi;
