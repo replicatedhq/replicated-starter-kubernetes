@@ -29,8 +29,12 @@ git remote add origin <your git repo>
 #### Configure environment
 
 You'll need to set up two environment variables to interact with vendor.replicated.com,
-`REPLICATED_APP` and `REPLICATED_API_TOKEN`. `REPLICATED_APP` should be set to the
-app name in the URL path at https://vendor.replicated.com/apps:
+
+
+- `REPLICATED_APP` and
+- `REPLICATED_API_TOKEN`
+
+`REPLICATED_APP` should be set to the app slug from the Settings page:
 
 <p align="center"><img src="./doc/REPLICATED_APP.png" width=600></img></p>
 
