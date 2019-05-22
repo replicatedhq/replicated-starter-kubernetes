@@ -1,0 +1,15 @@
+image: buildpack-deps:curl
+
+# need to set REPLICATED_APP and REPLICATED_API_TOKEN as build variables
+deploy_unstable:
+  stage: deploy
+  script:
+  
+    # Download CLI
+    # (out of scope for this example, but you probably want to bake a docker image with the CLI pre-installed)
+    - curl -fsSL https://github.com/replicatedhq/replicated/releases/download/v0.10.0/replicated_0.10.0_linux_amd64.tar.gz | tar xvz -C deps
+    
+    # create the release
+    - cat replicated.yaml | deps/replicated release create --promote Unstable --yaml - --version "${CI_COMMIT_SHA:0:7}" --release-notes "Automated CI release by $USER on $(date)"
+  only:
+    - master
