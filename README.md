@@ -16,23 +16,22 @@ Replicated YAML using a git repository.
 
 ### Get started
 
-First, clone the repo and re-initialize it
+This repo is a [GitHub Template Repository](https://help.github.com/en/articles/creating-a-repository-from-a-template). You can create a private copy by using the "Use this Template" link in the repo:
 
-```
-git clone github.com/replicatedhq/replicated-starter-kubernetes.git
-cd replicated-starter-kubernetes
-rm -rf .git
-git init
-git remote add origin <your git repo>
-```
+![Template Repo](https://help.github.com/assets/images/help/repository/use-this-template-button.png)
+
+You should use the template to create a new **private** repo in your org, for example `mycompany/replicated` or `mycompany/replicated-starter-kubernetes`.
+
+Once you've created a repository from the template, you'll want to `git clone` your new repo and `cd` into it locally.
 
 #### Configure environment
 
-You'll need to set up two environment variables to interact with vendor.replicated.com,
+You'll need to set up two environment variables to interact with vendor.replicated.com:
 
-
-- `REPLICATED_APP` and
-- `REPLICATED_API_TOKEN`
+```
+export REPLICATED_APP=...
+export REPLICATED_API_TOKEN=...
+```
 
 `REPLICATED_APP` should be set to the app slug from the Settings page:
 
