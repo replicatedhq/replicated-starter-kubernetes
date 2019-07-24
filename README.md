@@ -111,7 +111,7 @@ info gazer-color Watching 1 file[s] (replicated.yaml)
 
 Often teams will use one channel per developer, and then keep the `master` branch of this repo in sync with their `Unstable` branch.
 
-The project includes CI configs for [Travis CI](https://travis-ci.org) and [CircleCI](https://circleci.com).
+The project includes CI configs for [Travis CI](https://travis-ci.org), [CircleCI](https://circleci.com), [Jenkins CI](https://jenkins.io),  and [GitLab CI](https://gitlab.com).
 
 Both configs will:
 
