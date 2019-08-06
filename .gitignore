@@ -2,3 +2,5 @@ deps/
 node_modules
 package-lock.json
 test-results
+tmp/
+*.swp

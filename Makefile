@@ -25,6 +25,16 @@ lint: deps-lint
 	# check k8s for valid yaml, no schema checks yet
 	$(replicated_lint) validate --infile replicated.yaml --reporter $(lint_reporter) --excludeDefaults --multidocIndex=1
 
+kustomize: deps-vendor-cli
+	mkdir -p tmp
+	kustomize build base | awk '/^---/{print;print "# kind: scheduler-kubernetes";next}1' > tmp/k8s.yaml
+	cat replicated.yaml tmp/k8s.yaml > tmp/final.yaml
+
+release-new: deps-vendor-cli
+	mkdir -p tmp
+	kustomize build base | awk '/^---/{print;print "# kind: scheduler-kubernetes";next}1' > tmp/k8s.yaml
+	cat replicated.yaml tmp/k8s.yaml | deps/replicated release create --promote $(channel) --yaml -
+
 release: deps-vendor-cli
 	cat replicated.yaml | deps/replicated release create --promote $(channel) --yaml -
 

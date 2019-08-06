@@ -67,33 +67,7 @@ spec:
         name: echoheaders
         ports:
         - containerPort: 8080
----
-# kind: scheduler-kubernetes
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: echoheaders
-  name: echoheaders
-spec:
-  ports:
-  - name: http
-    port: 8080
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: echoheaders
-  type: ClusterIP
+
 
 ---
 # kind: scheduler-kubernetes
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: echoheaders-ingress
-spec:
-  backend:
-    serviceName: echoheaders
-    servicePort: 8080
-
-
