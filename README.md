@@ -107,6 +107,34 @@ $ make watch channel=my-dev-channel
 info gazer-color Watching 1 file[s] (replicated.yaml)
 ```
 
+#### Run CLI in Docker
+
+Use the `Dockerfile` to execute the Replicated CLI inside a container. This is especially helpful if you are running on Windows since `make` and `replicated` cli are not supported. If you have OS X or Linux you can continue using `make`.
+
+Build the image
+```
+docker build -t replicated-cli .
+```
+
+Run Replicated CLI container to verify
+```
+docker run -t replicated-cli --help
+```
+
+If the above command was successful you can run the following `make` commands. If `make` is not available just copy the respective commands from `Makefile` to execute separately.
+
+Note: Complete the 'Configure environment' section as the following commands require those environment variables.
+
+List releases
+```
+make docker-list-releases
+```
+
+Promote a release
+```
+make docker-release
+```
+
 ### Integrating with CI
 
 Often teams will use one channel per developer, and then keep the `master` branch of this repo in sync with their `Unstable` branch.

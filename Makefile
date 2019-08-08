@@ -55,3 +55,19 @@ pull-latest-release: deps-vendor-cli
 list-releases: deps-vendor-cli
 	deps/replicated release ls
 
+docker-release:
+	docker run \
+  -e REPLICATED_APP='${REPLICATED_APP}' \
+  -e REPLICATED_API_TOKEN='${REPLICATED_API_TOKEN}' \
+  --mount src=`pwd`,target=/working_dir,type=bind \
+  replicated-cli \
+  release create --promote $(channel) --yaml-file /working_dir/replicated.yaml
+
+docker-list-releases:
+	docker run \
+  -e REPLICATED_APP='${REPLICATED_APP}' \
+  -e REPLICATED_API_TOKEN='${REPLICATED_API_TOKEN}' \
+  --mount src=`pwd`,target=/working_dir,type=bind \
+  replicated-cli \
+  release ls
+
