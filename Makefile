@@ -1,6 +1,7 @@
 .PHONY: deps-vendor-cli deps-lint deps lint release init watch pull-latest-release list-releases
 
 channel ?= Unstable
+working_dir ?= `pwd`
 lint_reporter ?= console
 replicated_lint ?= `npm bin`/replicated-lint
 SHELL := /bin/bash -o pipefail
@@ -54,4 +55,19 @@ pull-latest-release: deps-vendor-cli
 
 list-releases: deps-vendor-cli
 	deps/replicated release ls
+
+docker-release:
+	docker run \
+  -e REPLICATED_APP \
+  -e REPLICATED_API_TOKEN \
+  --mount src=$(working_dir),target=/working_dir,type=bind \
+  replicated/vendor-cli \
+  release create --promote $(channel) --yaml-file /working_dir/replicated.yaml
+
+docker-list-releases:
+	docker run \
+  -e REPLICATED_APP \
+  -e REPLICATED_API_TOKEN \
+  replicated/vendor-cli \
+  release ls
 
