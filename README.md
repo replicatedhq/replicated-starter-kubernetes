@@ -106,6 +106,21 @@ $ make watch channel=my-dev-channel
 : └────────────────────────────────────────────
 info gazer-color Watching 1 file[s] (replicated.yaml)
 ```
+#### CLI in Docker
+
+Use `replicated/vendor-cli` Docker image to execute the CLI inside a container. This is useful in environments where `make` and `replicated` cli are unsupported. If you have OS X or Linux continue using `make`.
+
+List releases which will download `replicated/vendor-cli` and verify the environment variables are configured.
+```
+make docker-list-releases
+```
+
+Promote a release via Docker vendor CLI
+```
+make docker-release working_dir=/path/to/git/repo
+```
+
+Note: On Windows OS ensure the `working_dir` is shared and available in Docker (Settings -> Shared Drives).
 
 #### Run CLI in Docker
 
@@ -139,9 +154,9 @@ make docker-release
 
 Often teams will use one channel per developer, and then keep the `master` branch of this repo in sync with their `Unstable` branch.
 
-The project includes CI configs for [Travis CI](https://travis-ci.org), [CircleCI](https://circleci.com), [Jenkins CI](https://jenkins.io),  and [GitLab CI](https://gitlab.com).
+The project includes CI configs for [Travis CI](https://travis-ci.org), [CircleCI](https://circleci.com), [Jenkins CI](https://jenkins.io), and [GitLab CI](https://gitlab.com).
 
-Both configs will:
+The configs will:
 
 **On pull requests**:
 
