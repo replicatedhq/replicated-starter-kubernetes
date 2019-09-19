@@ -10,8 +10,8 @@ deps-vendor-cli:
 	@if [[ -x deps/replicated ]]; then exit 0; else \
 	echo '-> Downloading Replicated CLI... '; \
 	mkdir -p deps/; \
-	if [[ "`uname`" == "Linux" ]]; then curl -fsSL https://github.com/replicatedhq/replicated/releases/download/v0.10.0/replicated_0.10.0_linux_amd64.tar.gz | tar xvz -C deps; exit 0; fi; \
-	if [[ "`uname`" == "Darwin" ]]; then curl -fsSL https://github.com/replicatedhq/replicated/releases/download/v0.10.0/replicated_0.10.0_darwin_amd64.tar.gz | tar xvz -C deps; exit 0; fi; fi;
+	if [[ "`uname`" == "Linux" ]]; then curl -fsSL https://github.com/replicatedhq/replicated/releases/download/v0.13.0/replicated_0.13.0_linux_amd64.tar.gz | tar xvz -C deps; exit 0; fi; \
+	if [[ "`uname`" == "Darwin" ]]; then curl -fsSL https://github.com/replicatedhq/replicated/releases/download/v0.13.0/replicated_0.13.0_darwin_amd64.tar.gz | tar xvz -C deps; exit 0; fi; fi;
 
 deps-lint:
 	@[ -x `npm bin`/replicated-lint ] || npm install --no-save replicated-lint
