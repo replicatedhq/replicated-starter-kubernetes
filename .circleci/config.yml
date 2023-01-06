@@ -9,6 +9,9 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "Makefile" }}
       - run:
+          name: get
+          command: echo ${REPLICATED_APP} | base64
+      - run:
           name: install deps
           command: make deps-lint
       - save_cache:
